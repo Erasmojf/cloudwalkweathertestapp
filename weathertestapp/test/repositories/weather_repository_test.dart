@@ -1,11 +1,13 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:http/testing.dart';
+
 import 'package:mockito/annotations.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
 import 'package:weathertestapp/models/network_state.dart';
 import 'package:weathertestapp/repositories/weather_repository.dart';
 import 'package:weathertestapp/repositories/weather_repository_impl.dart';
+
+import 'weather_repository_test.mocks.dart';
 
 @GenerateMocks([http.Client])
 void main() {
