@@ -17,22 +17,28 @@ class WeatherListViewModel extends ValueNotifier<AppState> {
         super(InitAppState());
 
   searchByCityName(String cityName, {bool isOffline = false}) async {
-    final repository =
-        isOffline ? _weatherRepositoryOffline : _weatherRepository;
+    if (isOffline) {
+      final entityOffline = (await _weatherRepositoryOffline
+          .findByCityName(cityName)) as SuccessNetworkState<WeatherEntity?>;
 
-    final entityOffline = (await _weatherRepositoryOffline
-        .findByCityName(cityName)) as SuccessNetworkState<WeatherEntity>;
-
-    if (entityOffline.data.name != null) {
-      await loadData();
-      return;
+      if (entityOffline.data?.name != null) {
+        await loadData();
+        return;
+      }
     }
 
-    final response = await repository.findByCityName(cityName);
+    final response = await _weatherRepository.findByCityName(cityName);
 
     if (response is SuccessNetworkState) {
-      await _weatherRepositoryOffline
-          .saveData((response as SuccessNetworkState<WeatherEntity>).data);
+      final cityNetwork = (response as SuccessNetworkState<WeatherEntity>).data;
+      final offlineHasCity = await _weatherRepositoryOffline
+          .findByPredicate((entity) => entity.id == cityNetwork.id);
+
+      if (offlineHasCity) {
+        return;
+      }
+      await _weatherRepositoryOffline.saveData(cityNetwork);
+
       await loadData();
     } else if (response is FailureNetworkState) {
       value = FailureAppState(response.message);
