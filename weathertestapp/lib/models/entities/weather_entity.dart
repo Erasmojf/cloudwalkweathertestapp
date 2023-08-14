@@ -37,13 +37,14 @@ class WeatherEntity {
         weather?.add(Weather.fromJson(v));
       });
     }
-    // base = json['base'];
-    // main = json['main'] != null ? Main.fromJson(json['main']) : null;
-    // visibility = json['visibility'];
-    // wind = json['wind'] != null ? Wind.fromJson(json['wind']) : null;
-    // clouds = json['clouds'] != null ? Clouds.fromJson(json['clouds']) : null;
-    // dt = json['dt'];
-    // sys = json['sys'] != null ? Sys.fromJson(json['sys']) : null;
+    base = json['base'];
+    main = json['main'] != null ? Main.fromJson(json['main']) : null;
+    visibility = json['visibility'];
+    wind = json['wind'] != null ? Wind.fromJson(json['wind']) : null;
+    clouds = json['clouds'] != null ? Clouds.fromJson(json['clouds']) : null;
+    dt = json['dt'];
+    sys = json['sys'] != null ? Sys.fromJson(json['sys']) : null;
+
     timezone = json['timezone'];
     id = json['id'];
     name = json['name'];
