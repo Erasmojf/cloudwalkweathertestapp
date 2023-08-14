@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:weathertestapp/models/networh_state.dart';
+import 'package:weathertestapp/models/network_state.dart';
 
 abstract class WeatherService {
   Future findByCityName(String cityName);
