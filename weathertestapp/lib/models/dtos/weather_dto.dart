@@ -21,9 +21,9 @@ class WeatherItemDto {
       weathers: entity.weather != null
           ? entity.weather!
               .map((e) => WeatherDto(
-                    main: e.main,
-                    description: e.description,
-                    icon: e.icon,
+                    main: e.main ?? '',
+                    description: e.description ?? '',
+                    icon: e.icon ?? '',
                   ))
               .toList()
           : [],

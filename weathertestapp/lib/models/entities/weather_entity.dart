@@ -44,7 +44,6 @@ class WeatherEntity {
     clouds = json['clouds'] != null ? Clouds.fromJson(json['clouds']) : null;
     dt = json['dt'];
     sys = json['sys'] != null ? Sys.fromJson(json['sys']) : null;
-
     timezone = json['timezone'];
     id = json['id'];
     name = json['name'];
@@ -83,12 +82,12 @@ class WeatherEntity {
 }
 
 class Coord {
-  late double lon;
-  late double lat;
+  double? lon;
+  double? lat;
 
   Coord({
-    required this.lon,
-    required this.lat,
+    this.lon,
+    this.lat,
   });
 
   Coord.fromJson(Map<String, dynamic> json) {
@@ -105,16 +104,16 @@ class Coord {
 }
 
 class Weather {
-  late int id;
-  late String main;
-  late String description;
-  late String icon;
+  int? id;
+  String? main;
+  String? description;
+  String? icon;
 
   Weather({
-    required this.id,
-    required this.main,
-    required this.description,
-    required this.icon,
+    this.id,
+    this.main,
+    this.description,
+    this.icon,
   });
 
   Weather.fromJson(Map<String, dynamic> json) {
@@ -135,24 +134,24 @@ class Weather {
 }
 
 class Main {
-  late double temp;
-  late double feelsLike;
-  late double tempMin;
-  late double tempMax;
-  late int pressure;
-  late int humidity;
-  late int seaLevel;
-  late int grndLevel;
+  double? temp;
+  double? feelsLike;
+  double? tempMin;
+  double? tempMax;
+  int? pressure;
+  int? humidity;
+  int? seaLevel;
+  int? grndLevel;
 
   Main({
-    required this.temp,
-    required this.feelsLike,
-    required this.tempMin,
-    required this.tempMax,
-    required this.pressure,
-    required this.humidity,
-    required this.seaLevel,
-    required this.grndLevel,
+    this.temp,
+    this.feelsLike,
+    this.tempMin,
+    this.tempMax,
+    this.pressure,
+    this.humidity,
+    this.seaLevel,
+    this.grndLevel,
   });
 
   Main.fromJson(Map<String, dynamic> json) {
@@ -181,14 +180,14 @@ class Main {
 }
 
 class Wind {
-  late double speed;
-  late int deg;
-  late double gust;
+  double? speed;
+  int? deg;
+  double? gust;
 
   Wind({
-    required this.speed,
-    required this.deg,
-    required this.gust,
+    this.speed,
+    this.deg,
+    this.gust,
   });
 
   Wind.fromJson(Map<String, dynamic> json) {
@@ -207,9 +206,9 @@ class Wind {
 }
 
 class Clouds {
-  late int all;
+  int? all;
 
-  Clouds({required this.all});
+  Clouds({this.all});
 
   Clouds.fromJson(Map<String, dynamic> json) {
     all = json['all'];
@@ -223,18 +222,18 @@ class Clouds {
 }
 
 class Sys {
-  late int type;
-  late int id;
-  late String country;
-  late int sunrise;
-  late int sunset;
+  int? type;
+  int? id;
+  String? country;
+  int? sunrise;
+  int? sunset;
 
   Sys({
-    required this.type,
-    required this.id,
-    required this.country,
-    required this.sunrise,
-    required this.sunset,
+    this.type,
+    this.id,
+    this.country,
+    this.sunrise,
+    this.sunset,
   });
 
   Sys.fromJson(Map<String, dynamic> json) {

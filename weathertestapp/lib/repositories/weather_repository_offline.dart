@@ -2,9 +2,8 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weathertestapp/models/entities/weather_entity.dart';
+import 'package:weathertestapp/models/network_state.dart';
 import 'package:weathertestapp/repositories/weather_repository.dart';
-
-import '../models/network_state.dart';
 
 class WeatherRepositoryOffline implements WeatherRepository {
   final SharedPreferences sharedPreferences;
@@ -14,9 +13,16 @@ class WeatherRepositoryOffline implements WeatherRepository {
   @override
   Future<NetworkState> findByCityName(String cityName) async {
     final results =
-        (await loadData()) as SuccessNetworkState<List<WeatherEntity>>;
-    final cityFounded = results.data.firstWhere(
-        (element) => element.name?.contains(cityName) ?? false,
+        (await loadData()) as SuccessNetworkState<List<WeatherEntity>?>;
+
+    if (results == null) {
+      return SuccessNetworkState(WeatherEntity());
+    }
+
+    final cityFounded = results.data?.firstWhere(
+        (element) =>
+            element.name?.toLowerCase().contains(cityName.toLowerCase()) ??
+            false,
         orElse: () => WeatherEntity());
 
     return SuccessNetworkState(cityFounded);
@@ -32,7 +38,7 @@ class WeatherRepositoryOffline implements WeatherRepository {
       return SuccessNetworkState(weathers);
     }
 
-    return SuccessNetworkState([]);
+    return SuccessNetworkState(<WeatherEntity>[]);
   }
 
   @override
@@ -45,5 +51,20 @@ class WeatherRepositoryOffline implements WeatherRepository {
       return await sharedPreferences
           .setStringList('weathers', [jsonEncode(entity.toJson())]);
     }
+  }
+
+  @override
+  Future<bool> findByPredicate(
+      bool Function(WeatherEntity entity) predicate) async {
+    final results =
+        (await loadData()) as SuccessNetworkState<List<WeatherEntity>?>;
+
+    if (results.data?.isEmpty ?? false) {
+      return false;
+    }
+
+    final cityFounded = results.data?.contains((element) => predicate(element));
+
+    return cityFounded ?? false;
   }
 }

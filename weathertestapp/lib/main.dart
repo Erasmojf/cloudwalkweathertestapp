@@ -7,32 +7,19 @@ import 'package:weathertestapp/views/weather_list/weather_list_page.dart';
 import 'package:weathertestapp/views/weather_list/weather_list_view_model.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   final weatherRepository = WeatherRepositoryImpl(
       client: http.Client(),
       baseUri: Uri.parse('https://api.openweathermap.org/data/2.5/weather'),
       tokenApi: '0753f3d5a6ff7f00c26f690212e595c5');
   final weatherRepositoryOffline =
       WeatherRepositoryOffline(await SharedPreferences.getInstance());
-  // final response = await weatherRepository.findByCityName('São Paulo');
-  // if (response is SuccessNetworkState) {
-  //   print(response.message);
-  // } else if(response is FailureNetworkState) {
-  //   print(response.message);
-  // }
 
   final weatherListViewModel = WeatherListViewModel(
     weatherRepository: weatherRepository,
     weatherRepositoryOffline: weatherRepositoryOffline,
   );
-
-  // weatherListViewModel.addListener(() {
-  //   if (kDebugMode) {
-  //     print('weatherListViewModel emit');
-  //     print(weatherListViewModel.value);
-  //   }
-  // });
-
-  // weatherListViewModel.searchByCityName('jose');
 
   runApp(WeatherApp(
     viewModel: weatherListViewModel,
@@ -47,6 +34,7 @@ class WeatherApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: WeatherListPage(
         viewModel: viewModel,
       ),

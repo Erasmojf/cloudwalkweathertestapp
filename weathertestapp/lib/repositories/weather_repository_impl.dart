@@ -53,4 +53,9 @@ class WeatherRepositoryImpl implements WeatherRepository {
   Future saveData(WeatherEntity entity) async {
     throw UnimplementedError();
   }
+
+  @override
+  Future<bool> findByPredicate(Function(WeatherEntity entity) predicate) {
+    throw UnimplementedError();
+  }
 }
