@@ -5,8 +5,8 @@ abstract class NetworkState {
   NetworkState(this.message, this.statusCode);
 }
 
-class SuccessNetworkState extends NetworkState {
-  final dynamic data;
+class SuccessNetworkState<T> extends NetworkState {
+  final T data;
 
   SuccessNetworkState(this.data) : super('Success', 200);
 }
